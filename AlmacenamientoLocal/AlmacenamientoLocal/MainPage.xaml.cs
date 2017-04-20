@@ -1,9 +1,4 @@
 ﻿using AlmacenamientoLocal.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace AlmacenamientoLocal
@@ -23,6 +18,11 @@ namespace AlmacenamientoLocal
                     new Cliente() { Nombre = "Esteban", Direccion = "Cartago" }
                 });
             };
+
+            botonCargar.Clicked += (sender, args) =>
+			{
+				var elementos = Contexto.Cargar<Cliente>();
+			};
         }
     }
 }

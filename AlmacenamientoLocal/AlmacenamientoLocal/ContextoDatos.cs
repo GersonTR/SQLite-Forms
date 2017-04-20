@@ -21,13 +21,6 @@ namespace AlmacenamientoLocal
             using (var conexion = NuevaConexion())
             {
                 conexion.CreateTable<TClass>();
-
-                var query = conexion.Table<TClass>().ToArray();
-
-                foreach (var item in query)
-                {
-                    Debug.WriteLine(item.ToString());
-                }
             }
         }
 
@@ -45,5 +38,21 @@ namespace AlmacenamientoLocal
                 });
             }
         }
+
+		public IEnumerable<TClass> Cargar<TClass>()
+			where TClass : class
+		{
+			using (var conexion = NuevaConexion())
+			{
+            	var query = conexion.Table<TClass>().ToArray();
+
+				foreach (var item in query)
+				{
+					Debug.WriteLine(item.ToString());
+				}
+
+				return query;
+			}
+		}
     }
 }

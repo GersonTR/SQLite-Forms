@@ -20,12 +20,27 @@ namespace AlmacenamientoLocal.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
-        public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+        public override bool FinishedLaunching(UIApplication iOSapp, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
 
-            return base.FinishedLaunching(app, options);
+			var app = new App();
+
+			app.Contexto.NuevaConexion = () =>
+			{
+				var fileName = "almacenamiento.db3";
+				var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+				var libraryPath = System.IO.Path.Combine(documentsPath, "..", "Library");
+				var path = System.IO.Path.Combine(libraryPath, fileName);
+
+				var platform = new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS();
+				var connection = new SQLite.Net.SQLiteConnection(platform, path);
+
+				return connection;
+			};
+            LoadApplication(app);
+
+            return base.FinishedLaunching(iOSapp, options);
         }
     }
 }
